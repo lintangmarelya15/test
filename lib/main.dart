@@ -35,18 +35,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Tambahkan ini
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // Set key di Scaffold
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.menu), // Mengganti ikon back dengan ikon menu
           onPressed: () {
+            _scaffoldKey.currentState?.openDrawer(); // Buka drawer menggunakan key
           },
         ),
         title: Text(widget.title),
         centerTitle: true,
       ),
+      drawer: _buildDrawer(), // Menambahkan Drawer
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
@@ -87,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: 'MieMiean',
                   rating: 4.8,
                   time: '20 mnt',
-                  price: ' 40rb',
+                  price: '40rb',
                   sellerName: 'SUMIY OFFICIAL',
                   sellerImage: 'assets/images/logo.jpeg',
                   isVerified: true,
@@ -108,6 +113,62 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: AssetImage('assets/images/logo.jpeg'), // Ganti dengan gambar profil Anda
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Nama Pengguna',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Home'),
+            onTap: () {
+              Navigator.pop(context); // Menutup drawer
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text('Favorites'),
+            onTap: () {
+              Navigator.pop(context); // Menutup drawer
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Settings'),
+            onTap: () {
+              Navigator.pop(context); // Menutup drawer
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Logout'),
+            onTap: () {
+              Navigator.pop(context); // Menutup drawer
+            },
           ),
         ],
       ),
